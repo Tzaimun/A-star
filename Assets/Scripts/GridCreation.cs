@@ -31,7 +31,7 @@ public class GridCreation : MonoBehaviour
     {
         //Calculate tileSize to be able to scale the tile correctly.
         //translateTransform makes it possible to get the distance in units between two points.
-        float translateTransform = tileSize / pixelsPerUnit;
+        ;
         //Scale transform makes it possible to get the resized scale in units.
         float scaleTransform = tileSize / (tile.GetComponent<BoxCollider2D>().size.x * 100);
         tile.transform.localScale = new Vector3(scaleTransform, scaleTransform, scaleTransform);
@@ -45,7 +45,7 @@ public class GridCreation : MonoBehaviour
             {
                 //Get a new gridTile, add it to the gridTiles array.
                 Vector2 arrayPosition = new Vector2(i, j);
-                GridTile gridTile = gameManager.CreateTile(tile, translateTransform, arrayPosition);
+                GridTile gridTile = gameManager.CreateTile(tile, arrayPosition);
                 Instantiate(gridTile.tile, gridTile.position, new Quaternion(0, 0, 0, 0));
                 gridTiles[i, j] = gridTile;
             }

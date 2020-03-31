@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject tile;
     public Vector2 viewSize;
     public int tileAmountX;
-    private int tileAmountY;
+    internal int tileAmountY;
     public float pixelsPerUnit = 100.0f;
     private GridCreation gridCreation;
     private GridTile[,] gridTiles;
@@ -38,12 +38,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GridTile CreateTile(GameObject tile, float translateTransform, Vector2 arrayPosition)
+    public GridTile CreateTile(GameObject tile, Vector2 arrayPosition)
     {
         //Offsets to bottom left
+        float translateTransform = tileSize / pixelsPerUnit;
         Vector2 offset = new Vector2(-0.5f * viewSize.x / pixelsPerUnit, -0.5f * viewSize.y / pixelsPerUnit);
         Vector3 position = new Vector3(offset.y + translateTransform * arrayPosition.y, offset.x + translateTransform * arrayPosition.x, 0);
         GridTile gridTile = new GridTile(tile, position, arrayPosition);
+      
         return gridTile;
     }
 
@@ -55,7 +57,7 @@ public class GameManager : MonoBehaviour
     public void SelectTile(GameObject tileSelected)
     {
         tile = tileSelected;
-        
+        Debug.Log(tile);
     }
  
 }

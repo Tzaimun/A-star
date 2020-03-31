@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GridCreation;
+using static GameManager;
 
 public class Tile : MonoBehaviour
 {
@@ -29,22 +29,29 @@ public class Tile : MonoBehaviour
     {
         
     }
-    /*
+    
     private void OnMouseDown()
     {
         Debug.Log(gameObject.transform.position);
-        Debug.Log(gameObject)
+        Debug.Log(gameObject);
         GameObject tile = gameManager.tile;
         Quaternion rotation = new Quaternion(0, 0, 0, 0);
         if (tile.name == "Begin")
         {
-            //FindTile(tile);
-           // if (FindTile(tile, tileSimilar.position) == null)
+            GridTile tileInArray = FindTile(tile);
+            Debug.Log(tileInArray);
+            if (tileInArray != null)
+            {
+                GridTile newTile = gameManager.CreateTile(tile, tileInArray.arrayPosition);
+                //Debug.Log(newTile);
+                Destroy(gameObject);
+            }
+            // if (FindTile(tile, tileSimilar.position) == null)
             //{
             //    Instantiate(tile, tileSimilar.position, rotation);
             //    Destroy(gameObject);
-           //     
-           // }
+            //     
+            // }
         }
         else if (tile.name == "End")
         {
@@ -54,30 +61,31 @@ public class Tile : MonoBehaviour
         {
 
         }
-        for (int i = 0; i < gridCreation.tileAmountX; i++)
-        {
-            for (int j = 0; j < gridCreation.tileAmountY; j++)
-            {
-
-            }
-        }
        
-    }*/
-    /*GridTile FindTile(GameObject tile, Vector3 position)
+    }
+    GridTile FindTile(GameObject tile)
     {
-        for (int i = 0; i < gridCreation.tileAmountX; i++)
+        for (int i = 0; i < gameManager.tileAmountX; i++)
         {
-            for (int j = 0; j < gridCreation.tileAmountY; j++)
+            for (int j = 0; j < gameManager.tileAmountY; j++)
             {
-                if (tile == gridCreation.gridTiles[i, j].tile)
+                if (tile.name == gridCreation.gridTiles[i, j].tile.name)
                 {
-                    
+                    Debug.Log("null because name equals");
+                    return null;
+                }
+                Debug.Log(tile.transform.position + " " + gridCreation.gridTiles[i, j].position);
+                Debug.Log(tile.transform.position.x.GetType());
+                Debug.Log(gridCreation.gridTiles[i, j].position.x.GetType());
+                if (tile.transform.position == gridCreation.gridTiles[i, j].position)
+                {
+                    Debug.Log("not null");
+                    return gridCreation.gridTiles[i, j];
                 }
             }
         }
-        Quaternion rotation = new Quaternion(0, 0, 0, 0);
-
-        Instantiate(tile, gameObject.transform.position, rotation);
-        Destroy(gameObject); ;
-    }*/
+        Debug.Log("null because end loops");
+        return null;
+        
+    }
 }
