@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 4655010280060120148, guid: adca7e0dd204dd14eb6e9e2da6d61855, type: 3}
   viewSize: {x: 750, y: 750}
-  tileAmountX: 50
+  tileAmountX: 25
   pixelsPerUnit: 100
 --- !u!1 &836338070
 GameObject:
@@ -699,7 +699,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}

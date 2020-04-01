@@ -34,7 +34,10 @@ public class GridCreation : MonoBehaviour
         ;
         //Scale transform makes it possible to get the resized scale in units.
         float scaleTransform = tileSize / (tile.GetComponent<BoxCollider2D>().size.x * 100);
-        tile.transform.localScale = new Vector3(scaleTransform, scaleTransform, scaleTransform);
+        foreach (GameObject prefab in Prefabs)
+        {
+            prefab.transform.localScale = new Vector3(scaleTransform, scaleTransform, scaleTransform);
+        }
         //Get the amount of tiles on the y. Math.Ceiling rounds an float to the next integer.
 
         //Initialize the GameObject array and make it the size of the amount of tiles.
@@ -44,7 +47,7 @@ public class GridCreation : MonoBehaviour
             for (int j = 0; j < tileAmountY; j++)
             {
                 //Get a new gridTile, add it to the gridTiles array.
-                Vector2 arrayPosition = new Vector2(i, j);
+                Vector2Int arrayPosition = new Vector2Int(i, j);
                 GridTile gridTile = gameManager.CreateTile(tile, arrayPosition);
                 Instantiate(gridTile.tile, gridTile.position, new Quaternion(0, 0, 0, 0));
                 gridTiles[i, j] = gridTile;

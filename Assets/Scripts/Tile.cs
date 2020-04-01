@@ -29,37 +29,45 @@ public class Tile : MonoBehaviour
     {
         
     }
-    
-    private void OnMouseDown()
+
+    private void beginEndTile(GameObject tile, bool gameManagerTile)
     {
-        Debug.Log(gameObject.transform.position);
-        Debug.Log(gameObject);
-        GameObject tile = gameManager.tile;
-        Quaternion rotation = new Quaternion(0, 0, 0, 0);
-        if (tile.name == "Begin")
+        GridTile tileInArray = FindTile(tile);
+        
+        if (gameManagerTile == false)
         {
-            GridTile tileInArray = FindTile(tile);
-            Debug.Log(tileInArray);
             if (tileInArray != null)
             {
                 GridTile newTile = gameManager.CreateTile(tile, tileInArray.arrayPosition);
-                //Debug.Log(newTile);
+                Instantiate(newTile.tile, newTile.position, new Quaternion(0, 0, 0, 0));
+                gridCreation.gridTiles[newTile.arrayPosition.x, newTile.arrayPosition.y] = newTile;
                 Destroy(gameObject);
             }
-            // if (FindTile(tile, tileSimilar.position) == null)
-            //{
-            //    Instantiate(tile, tileSimilar.position, rotation);
-            //    Destroy(gameObject);
-            //     
-            // }
+        }
+    }
+    
+    private void OnMouseDown()
+    {
+        GameObject tile = gameManager.tile;
+
+        if (tile.name == "Begin")
+        {
+            beginEndTile(tile, gameManager.beginTile);
+            gameManager.beginTile = true;
         }
         else if (tile.name == "End")
         {
-
+            beginEndTile(tile, gameManager.endTile);
+            gameManager.endTile = true;
         }
         else if (tile.name == "Wall")
         {
-
+            beginEndTile(tile, gameManager.wallTile);
+            gameManager.amtWallTiles++;
+            if (gameManager.amtWallTiles >= gameManager.tileAmountX * gameManager.tileAmountY)
+            {
+                gameManager.wallTile = true;
+            }
         }
        
     }
@@ -69,22 +77,13 @@ public class Tile : MonoBehaviour
         {
             for (int j = 0; j < gameManager.tileAmountY; j++)
             {
-                if (tile.name == gridCreation.gridTiles[i, j].tile.name)
+                if (gameObject.transform.position == gridCreation.gridTiles[i, j].position)
                 {
-                    Debug.Log("null because name equals");
-                    return null;
-                }
-                Debug.Log(tile.transform.position + " " + gridCreation.gridTiles[i, j].position);
-                Debug.Log(tile.transform.position.x.GetType());
-                Debug.Log(gridCreation.gridTiles[i, j].position.x.GetType());
-                if (tile.transform.position == gridCreation.gridTiles[i, j].position)
-                {
-                    Debug.Log("not null");
+                    //Debug.Log(tile.name + " " + gridCreation.gridTiles[i, j].tile.name);
                     return gridCreation.gridTiles[i, j];
                 }
             }
         }
-        Debug.Log("null because end loops");
         return null;
         
     }

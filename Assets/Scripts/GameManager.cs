@@ -12,8 +12,11 @@ public class GameManager : MonoBehaviour
     public float pixelsPerUnit = 100.0f;
     private GridCreation gridCreation;
     private GridTile[,] gridTiles;
-    private float tileSize;
-    
+    internal float tileSize;
+    internal bool beginTile = false;
+    internal bool endTile = false;
+    internal bool wallTile = false;
+    internal int amtWallTiles;
 
     void Start()
     {
@@ -27,9 +30,9 @@ public class GameManager : MonoBehaviour
     {
         internal GameObject tile;
         internal Vector3 position;
-        internal Vector2 arrayPosition;
+        internal Vector2Int arrayPosition;
         internal string name;
-        public GridTile(GameObject tileObject, Vector3 positionVec, Vector2 arrayPositionVec)
+        public GridTile(GameObject tileObject, Vector3 positionVec, Vector2Int arrayPositionVec)
         {
             tile = tileObject;
             position = positionVec;
@@ -38,7 +41,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GridTile CreateTile(GameObject tile, Vector2 arrayPosition)
+    public GridTile CreateTile(GameObject tile, Vector2Int arrayPosition)
     {
         //Offsets to bottom left
         float translateTransform = tileSize / pixelsPerUnit;
