@@ -18,7 +18,7 @@ public class GridCreation : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         pixelsPerUnit = gameManager.pixelsPerUnit;
-        Debug.Log("hey");
+        //Debug.Log("hey");
     }
 
 
@@ -27,7 +27,7 @@ public class GridCreation : MonoBehaviour
         
     }
 
-    public void InitializeGrid(GameObject tile, int tileAmountY, float tileSize)
+    public void InitializeGrid(GameObject tile, float tileSize)
     {
         //Calculate tileSize to be able to scale the tile correctly.
         //translateTransform makes it possible to get the distance in units between two points.
@@ -41,10 +41,10 @@ public class GridCreation : MonoBehaviour
         //Get the amount of tiles on the y. Math.Ceiling rounds an float to the next integer.
 
         //Initialize the GameObject array and make it the size of the amount of tiles.
-        gridTiles = new GridTile[gameManager.tileAmountX, tileAmountY];
+        gridTiles = new GridTile[gameManager.tileAmountX, gameManager.tileAmountY];
         for (int i = 0; i < gameManager.tileAmountX; i++)
         {
-            for (int j = 0; j < tileAmountY; j++)
+            for (int j = 0; j < gameManager.tileAmountY; j++)
             {
                 //Get a new gridTile, add it to the gridTiles array.
                 Vector2Int arrayPosition = new Vector2Int(i, j);
@@ -53,6 +53,8 @@ public class GridCreation : MonoBehaviour
                 gridTiles[i, j] = gridTile;
             }
         }
+        gameManager.gridTiles = new GridTiles(gridTiles);
+        //Debug.Log(gameManager.gridTiles.tiles[0, 0].tile);
     }
     
 }

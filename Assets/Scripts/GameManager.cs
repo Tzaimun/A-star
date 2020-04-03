@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GridCreation;
 
+
 public class GameManager : MonoBehaviour
 {
     public GameObject tile;
@@ -10,20 +11,19 @@ public class GameManager : MonoBehaviour
     public int tileAmountX;
     internal int tileAmountY;
     public float pixelsPerUnit = 100.0f;
+    public GridTiles gridTiles;
     private GridCreation gridCreation;
-    private GridTile[,] gridTiles;
     internal float tileSize;
-    internal bool beginTile = false;
-    internal bool endTile = false;
-    internal bool wallTile = false;
-    internal int amtWallTiles;
+    private Algorithm algorithm;
 
     void Start()
     {
         gridCreation = GameObject.Find("Grid").GetComponent<GridCreation>();
+        algorithm = gameObject.GetComponent<Algorithm>();
         tileSize = viewSize.x / tileAmountX;
         tileAmountY = (int)System.Math.Ceiling(viewSize.y / tileSize);
-        gridCreation.InitializeGrid(tile, tileAmountY, tileSize);
+        gridCreation.InitializeGrid(tile, tileSize);
+        
     }
 
     public class GridTile
@@ -31,13 +31,32 @@ public class GameManager : MonoBehaviour
         internal GameObject tile;
         internal Vector3 position;
         internal Vector2Int arrayPosition;
-        internal string name;
         public GridTile(GameObject tileObject, Vector3 positionVec, Vector2Int arrayPositionVec)
         {
             tile = tileObject;
             position = positionVec;
             arrayPosition = arrayPositionVec;
-            name = arrayPositionVec.ToString();
+        }
+    }
+
+    public class GridTiles
+    {
+        public GridTile[,] tiles;
+        public GridTile begin;
+        public GridTile end;
+        public GridTiles(GridTile[,] gridList)
+        {
+            tiles = gridList;
+        }
+        internal GridTile Begin
+        {
+            get { return begin; }
+            set { begin = value;  }
+        }
+        internal GridTile End
+        {
+            get { return end; }
+            set { end = value; }
         }
     }
 
@@ -60,7 +79,12 @@ public class GameManager : MonoBehaviour
     public void SelectTile(GameObject tileSelected)
     {
         tile = tileSelected;
-        Debug.Log(tile);
+        //Debug.Log(tile);
+    }
+    
+    public void RunAlgorithm()
+    {
+        algorithm.AStar(gridTiles);
     }
  
 }

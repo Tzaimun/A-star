@@ -30,21 +30,34 @@ public class Tile : MonoBehaviour
         
     }
 
-    private void beginEndTile(GameObject tile, bool gameManagerTile)
+    private GridTile validTile(GameObject tile, GridTile gameManagerTile, bool isBeginEnd = false)
     {
         GridTile tileInArray = FindTile(tile);
-        
-        if (gameManagerTile == false)
+        //Debug.Log(gameManagerTile);
+        if (gameManagerTile == null)
         {
             if (tileInArray != null)
             {
                 GridTile newTile = gameManager.CreateTile(tile, tileInArray.arrayPosition);
                 Instantiate(newTile.tile, newTile.position, new Quaternion(0, 0, 0, 0));
                 gridCreation.gridTiles[newTile.arrayPosition.x, newTile.arrayPosition.y] = newTile;
+                Debug.Log(gameObject.name);
+                if (gameObject.name == "Begin(Clone)")
+                {
+                    gameManager.gridTiles.begin = null;
+                }
+                else if (gameObject.name == "End(Clone)")
+                {
+                    gameManager.gridTiles.end = null;
+                }
                 Destroy(gameObject);
+                return newTile;
             }
         }
+        return null;
     }
+
+    
     
     private void OnMouseDown()
     {
@@ -52,22 +65,28 @@ public class Tile : MonoBehaviour
 
         if (tile.name == "Begin")
         {
-            beginEndTile(tile, gameManager.beginTile);
-            gameManager.beginTile = true;
+            //Debug.Log(gameManager.gridTiles.begin);
+            GridTile beginTile = validTile(tile, gameManager.gridTiles.begin, true);
+            if (beginTile != null)
+            {
+                gameManager.gridTiles.begin = beginTile;
+            }
         }
         else if (tile.name == "End")
         {
-            beginEndTile(tile, gameManager.endTile);
-            gameManager.endTile = true;
+            GridTile endTile = validTile(tile, gameManager.gridTiles.end, true);
+            if (endTile != null)
+            {
+                gameManager.gridTiles.end = endTile;
+            }
         }
         else if (tile.name == "Wall")
         {
-            beginEndTile(tile, gameManager.wallTile);
-            gameManager.amtWallTiles++;
-            if (gameManager.amtWallTiles >= gameManager.tileAmountX * gameManager.tileAmountY)
-            {
-                gameManager.wallTile = true;
-            }
+            validTile(tile, null);
+        }
+        else if (tile.name == "Background")
+        {
+            validTile(tile, null);
         }
        
     }
@@ -79,7 +98,7 @@ public class Tile : MonoBehaviour
             {
                 if (gameObject.transform.position == gridCreation.gridTiles[i, j].position)
                 {
-                    //Debug.Log(tile.name + " " + gridCreation.gridTiles[i, j].tile.name);
+                    Debug.Log(gridCreation.gridTiles[i, j].arrayPosition);
                     return gridCreation.gridTiles[i, j];
                 }
             }
