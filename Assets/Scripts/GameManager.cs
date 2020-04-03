@@ -31,22 +31,40 @@ public class GameManager : MonoBehaviour
         internal GameObject tile;
         internal Vector3 position;
         internal Vector2Int arrayPosition;
-        public GridTile(GameObject tileObject, Vector3 positionVec, Vector2Int arrayPositionVec)
+        internal float f;
+        internal float g;
+        internal float h;
+        public GridTile(GameObject tile, Vector3 position, Vector2Int arrayPosition)
         {
-            tile = tileObject;
-            position = positionVec;
-            arrayPosition = arrayPositionVec;
+            this.tile = tile;
+            this.position = position;
+            this.arrayPosition = arrayPosition;
+        }
+        internal float F
+        {
+            get { return f; }
+            set { f = value; }
+        }
+        internal float G
+        {
+            get { return g; }
+            set { g = value; }
+        }
+        internal float H
+        {
+            get { return h; }
+            set { h = value; }
         }
     }
 
     public class GridTiles
     {
-        public GridTile[,] tiles;
-        public GridTile begin;
-        public GridTile end;
-        public GridTiles(GridTile[,] gridList)
+        internal GridTile[,] tiles;
+        internal GridTile begin;
+        internal GridTile end;
+        public GridTiles(GridTile[,] tiles)
         {
-            tiles = gridList;
+            this.tiles = tiles;
         }
         internal GridTile Begin
         {
@@ -67,13 +85,9 @@ public class GameManager : MonoBehaviour
         Vector2 offset = new Vector2(-0.5f * viewSize.x / pixelsPerUnit, -0.5f * viewSize.y / pixelsPerUnit);
         Vector3 position = new Vector3(offset.y + translateTransform * arrayPosition.y, offset.x + translateTransform * arrayPosition.x, 0);
         GridTile gridTile = new GridTile(tile, position, arrayPosition);
+
       
         return gridTile;
-    }
-
-    public void InstantiateFullGrid()
-    {
-       
     }
 
     public void SelectTile(GameObject tileSelected)

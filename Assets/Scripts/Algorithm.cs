@@ -15,9 +15,28 @@ public class Algorithm : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
-    
+
+    /*public struct Location
+    {
+        public readonly int x, y;
+        public Location(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }*/
+
+    public float ManhattanHeuristic(Vector2 start, Vector2 destination)
+    {
+        // h =∣ax−bx​∣+∣ay​−by​∣
+        return System.Math.Abs(start.x - destination.x) + System.Math.Abs(start.y - destination.y);
+    }
+
     public void AStar(GridTiles gridTiles)
     {
+        Dictionary<GridTile, GridTile> cameFrom = new Dictionary<GridTile, GridTile>();
+        Dictionary<GridTile, float> costSoFar = new Dictionary<GridTile, float>();
+
         Debug.Log(gridTiles.begin);
         if (gridTiles.begin != null)
         {
@@ -34,14 +53,18 @@ public class Algorithm : MonoBehaviour
             }
             else
             {
+                closed.Add(lowestF);
                 List<GridTile> neighbours = FindNeighbours(lowestF.arrayPosition, gridTiles);
-                foreach (GridTile i in neighbours)
+                foreach (GridTile neighbour in neighbours)
                 {
-                    Debug.Log(i.arrayPosition);
+                    if (neighbour.g < lowestF.g && closed.BinarySearch(neighbour) > 0) {
+
+                    }
+                    Debug.Log(neighbour.arrayPosition);
                 }
                 
             }
-            break;
+            endReached = true;
         }
     }
 
